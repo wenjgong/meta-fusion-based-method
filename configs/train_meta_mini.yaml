@@ -1,0 +1,38 @@
+train_dataset: loso
+train_dataset_args: {split: train}
+tval_dataset: loso
+tval_dataset_args: {split: test}
+val_dataset: loso
+val_dataset_args: {split: val}
+
+model1: classifier
+model_args1:
+    encoder: resnet18
+    encoder_args: {}
+    classifier: linear-classifier
+    classifier_args: {n_classes: 4}
+#load_encoder: ./save/classifier_mini-imagenet_resnet12/epoch-last.pth
+load_encoder1: ./save/im800-resnet18.pth
+optimizer_args1: {lr: 0.01, weight_decay: 5.e-4, milestones: [90]}
+max_epoch1: 50
+batch_size1: 128
+
+model: meta-baseline
+model_args: 
+    encoder: resnet18
+    encoder_args: {}
+#load_encoder: ./save/classifier_mini-imagenet_resnet12/epoch-last.pth
+#load_encoder: ./save/im800-resnet18.pth
+load_encoder: ./save/classifier_train_ck+_resnet18/epoch-last.pth
+
+n_way: 4
+n_shot: 5
+n_query: 1
+train_batches: 30
+ep_per_batch: 4
+
+max_epoch: 7
+optimizer: sgd
+optimizer_args: {lr: 0.05, weight_decay: 5.e-4}
+
+visualize_datasets: True
